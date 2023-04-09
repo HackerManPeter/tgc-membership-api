@@ -7,6 +7,7 @@ import { UserModule } from './user/user.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { AuthModule } from './auth/auth.module';
 import { MemberModule } from './member/member.module';
+import { BranchModule } from './branch/branch.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { MemberModule } from './member/member.module';
     UserModule,
     AuthModule,
     MemberModule,
+    BranchModule,
   ],
   controllers: [AppController],
   providers: [
