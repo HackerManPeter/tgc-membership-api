@@ -1,9 +1,11 @@
+import { Branch } from 'src/branch/entities/branch.entity';
 import { convertToTitleCase } from 'src/utils/strings';
 import {
   BeforeInsert,
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -35,6 +37,9 @@ export class Member {
 
   @CreateDateColumn()
   createdAt: string;
+
+  @ManyToOne(() => Branch, (branch) => branch.members)
+  branch: Branch;
 
   @BeforeInsert()
   updateFullName() {

@@ -52,7 +52,7 @@ export class UserService {
         ...updateUserDto,
       });
 
-      return this.userRepository.findOneByOrFail({ id });
+      return await this.userRepository.findOneByOrFail({ id });
     } catch (error) {
       throw new BadRequestException();
     }
