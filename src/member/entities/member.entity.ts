@@ -1,10 +1,12 @@
 import { Branch } from 'src/branch/entities/branch.entity';
+import { Unit } from 'src/unit/entities/unit.entity';
 import { convertToTitleCase } from 'src/utils/strings';
 import {
   BeforeInsert,
   Column,
   CreateDateColumn,
   Entity,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -40,6 +42,9 @@ export class Member {
 
   @ManyToOne(() => Branch, (branch) => branch.members)
   branch: Branch;
+
+  @ManyToMany(() => Unit, (unit) => unit.members)
+  units: Unit[];
 
   @BeforeInsert()
   updateFullName() {
