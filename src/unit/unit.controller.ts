@@ -10,6 +10,7 @@ import {
 import { UnitService } from './unit.service';
 import { CreateUnitDto } from './dto/create-unit.dto';
 import { UpdateUnitDto } from './dto/update-unit.dto';
+import { AssignMembersDTO } from 'src/branch/dto/assign-members.dto';
 
 @Controller('unit')
 export class UnitController {
@@ -28,6 +29,14 @@ export class UnitController {
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.unitService.findOne(id);
+  }
+
+  @Post('assign-member/:id')
+  assignMember(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() assignMembersDto: AssignMembersDTO,
+  ) {
+    return this.unitService.assignMember(id, assignMembersDto);
   }
 
   @Patch(':id')

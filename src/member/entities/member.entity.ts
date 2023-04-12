@@ -6,6 +6,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
   ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -40,10 +41,11 @@ export class Member {
   @CreateDateColumn()
   createdAt: string;
 
-  @ManyToOne(() => Branch, (branch) => branch.members)
+  @ManyToOne(() => Branch, (branch) => branch.members, { eager: true })
   branch: Branch;
 
-  @ManyToMany(() => Unit, (unit) => unit.members)
+  @ManyToMany(() => Unit, (unit) => unit.members, { eager: true })
+  @JoinTable()
   units: Unit[];
 
   @BeforeInsert()
