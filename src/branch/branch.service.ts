@@ -47,15 +47,9 @@ export class BranchService {
       const branch = await this.branchRepository.findOneByOrFail({ id });
 
       const { newMembers } = assignMemberDto;
-      const validatedMembers = [];
-
-      for (const member in newMembers) {
-        const validatedMember = await this.memberService.findOne(
-          newMembers[member],
-        );
-
-        validatedMembers.push(validatedMember);
-      }
+      const validatedMembers = await this.memberService.validateMembers(
+        newMembers,
+      );
 
       branch.members = validatedMembers;
 

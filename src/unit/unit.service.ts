@@ -8,11 +8,14 @@ import { UpdateUnitDto } from './dto/update-unit.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Unit } from './entities/unit.entity';
 import { Repository } from 'typeorm';
+import { MemberService } from 'src/member/member.service';
+import { AssignMembersDTO } from 'src/branch/dto/assign-members.dto';
 
 @Injectable()
 export class UnitService {
   constructor(
     @InjectRepository(Unit) private readonly unitRepository: Repository<Unit>,
+    private readonly memberService: MemberService,
   ) {}
   create(createUnitDto: CreateUnitDto) {
     const newUnit = this.unitRepository.create(createUnitDto);
@@ -31,6 +34,23 @@ export class UnitService {
       return unit;
     } catch (error) {
       throw new NotFoundException();
+    }
+  }
+
+  async assignMember(id: number, assignMemberDto: AssignMembersDTO) {
+    try {
+      const unit = await this.unitRepository.findOneByOrFail({ id });
+
+      const { newMembers } = assignMemberDto;
+      const validatedMembers = await this.memberService.validateMembers(
+        newMembers,
+      );
+
+      unit.members = validatedMembers;
+
+      return await this.unitRepository.save(unit);
+    } catch (error) {
+      throw new BadRequestException();
     }
   }
 

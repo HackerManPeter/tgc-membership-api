@@ -54,4 +54,16 @@ export class MemberService {
       throw new NotFoundException();
     }
   }
+
+  async validateMembers(memberIds: number[]): Promise<Member[]> {
+    const validatedMembers: Member[] = [];
+
+    for (const id in memberIds) {
+      const validatedMember = await this.findOne(memberIds[id]);
+
+      validatedMembers.push(validatedMember);
+    }
+
+    return validatedMembers;
+  }
 }
