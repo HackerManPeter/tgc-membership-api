@@ -24,9 +24,9 @@ export class MemberService {
     return this.memberRepository.find();
   }
 
-  findOne(id: number) {
+  async findOne(id: number) {
     try {
-      const member = this.memberRepository.findOneByOrFail({ id });
+      const member = await this.memberRepository.findOneByOrFail({ id });
 
       return member;
     } catch (error) {
@@ -53,5 +53,17 @@ export class MemberService {
     } catch (error) {
       throw new NotFoundException();
     }
+  }
+
+  async validateMembers(memberIds: number[]): Promise<Member[]> {
+    const validatedMembers: Member[] = [];
+
+    for (const id in memberIds) {
+      const validatedMember = await this.findOne(memberIds[id]);
+
+      validatedMembers.push(validatedMember);
+    }
+
+    return validatedMembers;
   }
 }

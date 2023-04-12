@@ -10,6 +10,7 @@ import {
 import { BranchService } from './branch.service';
 import { CreateBranchDto } from './dto/create-branch.dto';
 import { UpdateBranchDto } from './dto/update-branch.dto';
+import { AssignMembersDTO } from './dto/assign-members.dto';
 
 @Controller('branch')
 export class BranchController {
@@ -28,6 +29,14 @@ export class BranchController {
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.branchService.findOne(id);
+  }
+
+  @Post('assign-member/:id')
+  assignMember(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() member: AssignMembersDTO,
+  ) {
+    return this.branchService.assignMember(id, member);
   }
 
   @Patch(':id')

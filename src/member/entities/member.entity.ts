@@ -1,10 +1,13 @@
 import { Branch } from 'src/branch/entities/branch.entity';
+import { Unit } from 'src/unit/entities/unit.entity';
 import { convertToTitleCase } from 'src/utils/strings';
 import {
   BeforeInsert,
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -38,8 +41,12 @@ export class Member {
   @CreateDateColumn()
   createdAt: string;
 
-  @ManyToOne(() => Branch, (branch) => branch.members)
+  @ManyToOne(() => Branch, (branch) => branch.members, { eager: true })
   branch: Branch;
+
+  @ManyToMany(() => Unit, (unit) => unit.members, { eager: true })
+  @JoinTable()
+  units: Unit[];
 
   @BeforeInsert()
   updateFullName() {
