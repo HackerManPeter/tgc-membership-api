@@ -24,9 +24,9 @@ export class MemberService {
     return this.memberRepository.find();
   }
 
-  findOne(id: number) {
+  async findOne(id: number) {
     try {
-      const member = this.memberRepository.findOneByOrFail({ id });
+      const member = await this.memberRepository.findOneByOrFail({ id });
 
       return member;
     } catch (error) {

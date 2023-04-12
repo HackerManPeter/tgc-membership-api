@@ -13,7 +13,7 @@ export class Branch {
   state: string;
 
   @Column()
-  countryCode: string;
+  country: string;
 
   @OneToMany(() => Member, (member) => member.branch)
   members: Member[];

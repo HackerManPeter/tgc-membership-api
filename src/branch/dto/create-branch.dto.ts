@@ -6,4 +6,7 @@ export class CreateBranchDto {
 
   @IsString()
   state: string;
+
+  @IsString()
+  country: string;
 }
