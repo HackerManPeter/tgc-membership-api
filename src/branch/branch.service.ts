@@ -42,7 +42,16 @@ export class BranchService {
     }
   }
 
-  async assignMember(id: number, assignMemberDto: AssignMembersDTO) {
+  /**
+   * Add new members to a branch
+   * @param id Id of the branch
+   * @param assignMemberDto array containing new members
+   * @returns branch
+   */
+  async assignMember(
+    id: number,
+    assignMemberDto: AssignMembersDTO,
+  ): Promise<Branch> {
     try {
       const branch = await this.branchRepository.findOneByOrFail({ id });
 

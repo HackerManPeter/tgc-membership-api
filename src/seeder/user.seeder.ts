@@ -12,13 +12,21 @@ export class UserSeeder implements Seeder {
 
   async seed() {
     const users = DataFactory.createForClass(User).generate(5);
-
     const newUsers = this.userRepository.create(users);
-
     await this.userRepository.save(newUsers);
+
+    const userPeter = {
+      firstName: 'peter',
+      lastName: 'ebueku',
+      email: 'peter@email.com',
+      password: 'peter123',
+    };
+
+    const newUserPeter = this.userRepository.create(userPeter);
+    await this.userRepository.save(newUserPeter);
   }
 
   async drop() {
-    this.userRepository.delete({});
+    await this.userRepository.delete({});
   }
 }
