@@ -18,7 +18,13 @@ export class BranchService {
     private readonly branchRepository: Repository<Branch>,
     private readonly memberService: MemberService,
   ) {}
-  async create(createBranchDto: CreateBranchDto) {
+
+  /**
+   * Create a new branch instance
+   * @param createBranchDto Information to create new branch
+   * @returns Newly created branch instance
+   */
+  async create(createBranchDto: CreateBranchDto): Promise<Branch> {
     try {
       const branch = this.branchRepository.create(createBranchDto);
 
@@ -28,7 +34,11 @@ export class BranchService {
     }
   }
 
-  findAll() {
+  /**
+   * Find all branches
+   * @returns All branch instances
+   */
+  findAll(): Promise<Branch[]> {
     return this.branchRepository.find();
   }
 
@@ -68,7 +78,13 @@ export class BranchService {
     }
   }
 
-  async update(id: number, updateBranchDto: UpdateBranchDto) {
+  /**
+   * Update branch instance
+   * @param id Id of branch to update
+   * @param updateBranchDto Updated branch info to change in branch
+   * @returns Newly updated branch instance
+   */
+  async update(id: number, updateBranchDto: UpdateBranchDto): Promise<Branch> {
     try {
       await this.branchRepository.findOneByOrFail({ id });
 
