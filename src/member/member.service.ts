@@ -15,16 +15,31 @@ export class MemberService {
     @InjectRepository(Member)
     private readonly memberRepository: Repository<Member>,
   ) {}
-  create(createMemberDto: CreateMemberDto) {
+
+  /**
+   * Create new member instance
+   * @param createMemberDto Information to create new member
+   * @returns Newly created member instance
+   */
+  create(createMemberDto: CreateMemberDto): Promise<Member> {
     const member = this.memberRepository.create(createMemberDto);
     return this.memberRepository.save(member);
   }
 
-  findAll() {
+  /**
+   * Find all member instances
+   * @returns All member instances
+   */
+  findAll(): Promise<Member[]> {
     return this.memberRepository.find();
   }
 
-  async findOne(id: number) {
+  /**
+   * Find single member instance
+   * @param id Id of member instance
+   * @returns Member instance
+   */
+  async findOne(id: number): Promise<Member> {
     try {
       const member = await this.memberRepository.findOneByOrFail({ id });
 
@@ -34,7 +49,13 @@ export class MemberService {
     }
   }
 
-  async update(id: number, updateMemberDto: UpdateMemberDto) {
+  /**
+   *
+   * @param id Id of member instance to update
+   * @param updateMemberDto Updated member information
+   * @returns Newly updated member instance
+   */
+  async update(id: number, updateMemberDto: UpdateMemberDto): Promise<Member> {
     try {
       await this.memberRepository.findOneByOrFail({ id });
       await this.memberRepository.update(id, { ...updateMemberDto });
@@ -44,7 +65,12 @@ export class MemberService {
     }
   }
 
-  async deactivate(id: number) {
+  /**
+   * Deactivate member
+   * @param id Id of member to be deactivated
+   * @returns Newly deactivated Member
+   */
+  async deactivate(id: number): Promise<Member> {
     try {
       const member = await this.memberRepository.findOneByOrFail({ id });
       member.isActive = false;
@@ -55,6 +81,11 @@ export class MemberService {
     }
   }
 
+  /**
+   * Validate a set of members exist
+   * @param memberIds Id of all the members to be validated
+   * @returns Array of validated Members
+   */
   async validateMembers(memberIds: number[]): Promise<Member[]> {
     const validatedMembers: Member[] = [];
 

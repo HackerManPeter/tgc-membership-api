@@ -80,8 +80,8 @@ export class BranchService {
 
   /**
    * Update branch instance
-   * @param id Id of branch to update
-   * @param updateBranchDto Updated branch info to change in branch
+   * @param id Id of branch instance to update
+   * @param updateBranchDto Updated branch information
    * @returns Newly updated branch instance
    */
   async update(id: number, updateBranchDto: UpdateBranchDto): Promise<Branch> {
