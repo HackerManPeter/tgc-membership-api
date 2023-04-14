@@ -4,6 +4,8 @@ import { User } from 'src/user/entities/user.entity';
 import { UserSeeder } from './user.seeder';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import config from '../config';
+import { Member } from 'src/member/entities/member.entity';
+import { MemberSeeder } from './member';
 
 seeder({
   imports: [
@@ -22,6 +24,6 @@ seeder({
         synchronize: true,
       }),
     }),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Member]),
   ],
-}).run([UserSeeder]);
+}).run([UserSeeder, MemberSeeder]);
