@@ -50,7 +50,7 @@ export class MemberService {
   }
 
   /**
-   *
+   * Update member instance
    * @param id Id of member instance to update
    * @param updateMemberDto Updated member information
    * @returns Newly updated member instance

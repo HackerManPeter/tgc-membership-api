@@ -14,17 +14,32 @@ export class UserService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
   ) {}
-  async create(createUserDto: CreateUserDto) {
+
+  /**
+   * Create new user instance
+   * @param createUserDto Information to create new user
+   * @returns Newly created user
+   */
+  async create(createUserDto: CreateUserDto): Promise<User> {
     const user = this.userRepository.create(createUserDto);
 
     return this.userRepository.save(user);
   }
 
-  findAll() {
+  /**
+   * Find all unit instances
+   * @returns All user instances
+   */
+  findAll(): Promise<User[]> {
     return this.userRepository.find();
   }
 
-  async findOne(id: number) {
+  /**
+   * Find single unit instance
+   * @param id Id of unit instance
+   * @returns Unit instance
+   */
+  async findOne(id: number): Promise<User> {
     try {
       const user = await this.userRepository.findOneByOrFail({ id });
 
@@ -34,6 +49,11 @@ export class UserService {
     }
   }
 
+  /**
+   * Find Single member instance using their email
+   * @param email Email of member instance
+   * @returns Member Instance
+   */
   async findOneByEmail(email: string) {
     try {
       const user = await this.userRepository.findOneByOrFail({ email });
@@ -44,6 +64,12 @@ export class UserService {
     }
   }
 
+  /**
+   * Update user instance
+   * @param id Id of user instance to update
+   * @param updateUserDto Updated user information
+   * @returns Newly updated user instance
+   */
   async update(id: number, updateUserDto: UpdateUserDto) {
     try {
       await this.userRepository.findOneByOrFail({ id });
