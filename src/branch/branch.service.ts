@@ -53,7 +53,7 @@ export class BranchService {
   }
 
   /**
-   * Add new members to a branch
+   * Add members to a branch
    * @param id Id of the branch
    * @param assignMemberDto array containing new members
    * @returns branch
