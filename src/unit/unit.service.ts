@@ -17,17 +17,32 @@ export class UnitService {
     @InjectRepository(Unit) private readonly unitRepository: Repository<Unit>,
     private readonly memberService: MemberService,
   ) {}
-  create(createUnitDto: CreateUnitDto) {
+
+  /**
+   * Create new unit instance
+   * @param createUnitDto Information to create a new unit
+   * @returns Newly created unit instance
+   */
+  create(createUnitDto: CreateUnitDto): Promise<Unit> {
     const newUnit = this.unitRepository.create(createUnitDto);
 
     return this.unitRepository.save(newUnit);
   }
 
-  findAll() {
+  /**
+   * Find all unit instances
+   * @returns All newly created unit instances
+   */
+  findAll(): Promise<Unit[]> {
     return this.unitRepository.find();
   }
 
-  async findOne(id: number) {
+  /**
+   * Find single unit instance
+   * @param id Id of unit instance
+   * @returns Unit instance
+   */
+  async findOne(id: number): Promise<Unit> {
     try {
       const unit = await this.unitRepository.findOneByOrFail({ id });
 
@@ -37,7 +52,16 @@ export class UnitService {
     }
   }
 
-  async assignMember(id: number, assignMemberDto: AssignMembersDTO) {
+  /**
+   * Add members to a unit
+   * @param id Id of the unit
+   * @param assignMemberDto array containing new members
+   * @returns unit
+   */
+  async assignMember(
+    id: number,
+    assignMemberDto: AssignMembersDTO,
+  ): Promise<Unit> {
     try {
       const unit = await this.unitRepository.findOneByOrFail({ id });
 
@@ -54,7 +78,13 @@ export class UnitService {
     }
   }
 
-  async update(id: number, updateUnitDto: UpdateUnitDto) {
+  /**
+   * Update unit instance
+   * @param id Id of unit instance to update
+   * @param updateUnitDto Updated unit information
+   * @returns Newly updated unit instance
+   */
+  async update(id: number, updateUnitDto: UpdateUnitDto): Promise<Unit> {
     try {
       await this.unitRepository.findOneByOrFail({ id });
       await this.unitRepository.update(id, { ...updateUnitDto });

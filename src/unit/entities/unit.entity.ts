@@ -1,3 +1,4 @@
+import { Factory } from 'nestjs-seeder';
 import { Member } from 'src/member/entities/member.entity';
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -6,6 +7,7 @@ export class Unit {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Factory('Technical')
   @Column()
   name: string;
 

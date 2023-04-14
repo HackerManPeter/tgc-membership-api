@@ -1,3 +1,4 @@
+import { Factory } from 'nestjs-seeder';
 import { Branch } from 'src/branch/entities/branch.entity';
 import { Unit } from 'src/unit/entities/unit.entity';
 import { convertToTitleCase } from 'src/utils/strings';
@@ -17,15 +18,23 @@ export class Member {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Factory((faker) =>
+    faker.name.firstName(faker.helpers.arrayElement(['male', 'female'])),
+  )
   @Column()
   firstName: string;
 
+  @Factory((faker) => faker.name.lastName())
   @Column()
   lastName: string;
 
+  @Factory((faker, ctx) =>
+    faker.helpers.unique(faker.internet.email, [ctx.firstName, ctx.lastName]),
+  )
   @Column({ unique: true })
   email: string;
 
+  @Factory((faker) => faker.phone.number('+2348#########'))
   @Column({ unique: true })
   phoneNumber: string;
 
