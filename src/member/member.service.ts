@@ -31,7 +31,7 @@ export class MemberService {
    * @returns All member instances
    */
   findAll(): Promise<Member[]> {
-    return this.memberRepository.find();
+    return this.memberRepository.find({ order: { id: 'DESC' } });
   }
 
   /**
