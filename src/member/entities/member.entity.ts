@@ -12,21 +12,24 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Gender } from '../member.enum';
 
 @Entity()
 export class Member {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Factory((faker) =>
-    faker.name.firstName(faker.helpers.arrayElement(['male', 'female'])),
-  )
+  @Factory((faker, ctx) => faker.name.firstName(ctx.gender))
   @Column()
   firstName: string;
 
   @Factory((faker) => faker.name.lastName())
   @Column()
   lastName: string;
+
+  @Factory((faker) => faker.helpers.arrayElement([Gender.male, Gender.female]))
+  @Column({ enum: Gender })
+  gender: Gender;
 
   @Factory((faker, ctx) =>
     faker.helpers.unique(faker.internet.email, [ctx.firstName, ctx.lastName]),
